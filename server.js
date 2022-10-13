@@ -1,13 +1,16 @@
 const express = require('express');
 const cors = require('cors');
-const db = require('./index');
+const db = require('./models');
 db.sequelize.sync();
-const Role = db.role;
-
+// const Tag = db.;
 const app = express();
 let corsOptions = {
     origin: 'http://localhost:8081'
 }
+
+// routes
+require('./routes/auth.routes')(app);
+require('./routes/user.routes')(app);
 
 app.use(cors(corsOptions))
 
@@ -26,22 +29,22 @@ app.listen(PORT, () => {
 
 db.sequelize.sync({force: true}).then(() => {
     console.log('Drop and Resync Db');
-    initial();
+    // initial();
 })
 
-function initial() {
-    Role.create({
-        id: 1,
-        name: "user"
-    });
-
-    Role.create({
-        id: 2,
-        name: "moderator"
-    });
-
-    Role.create({
-        id: 3,
-        name: "admin"
-    });
-}
+// function initial() {
+//     Tag.create({
+//         id: 1,
+//         name: "user"
+//     });
+//
+//     Tag.create({
+//         id: 2,
+//         name: "moderator"
+//     });
+//
+//     Tag.create({
+//         id: 3,
+//         name: "admin"
+//     });
+// }
